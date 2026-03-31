@@ -7,24 +7,25 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,700&family=Libre+Franklin:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --ink: #1a1a1a;
-  --paper: #f4f1eb;
-  --accent: #c23a22;
-  --muted: #7a7568;
+  --ink: #212121;
+  --paper: #ffffff;
+  --accent: #cc1100;
+  --muted: #666;
+  --rule: #ccc;
   --tbr-color: #d4a017;
   --cox-color: #1a9a8e;
   --well-blue: #4a6fa5;
-  --recent-color: #c23a22;
+  --recent-color: #cc1100;
 }
 
 body {
-  font-family: 'Libre Franklin', sans-serif;
-  background: var(--ink);
+  font-family: 'Noto Sans', 'Helvetica Neue', Arial, sans-serif;
+  background: #f5f5f5;
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
 }
@@ -55,16 +56,15 @@ body {
 
 .card {
   pointer-events: auto;
-  background: rgba(244, 241, 235, 0.94);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  max-width: 420px;
-  padding: 2.5rem 2.2rem;
-  border-left: 4px solid var(--accent);
-  box-shadow: 0 4px 40px rgba(0,0,0,0.25);
+  background: var(--paper);
+  max-width: 400px;
+  padding: 1.8rem 1.6rem;
+  border-top: 3px solid var(--accent);
+  border-left: none;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.12);
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .card.visible {
@@ -72,84 +72,101 @@ body {
   transform: translateY(0);
 }
 
-.card h1 {
-  font-family: 'Source Serif 4', serif;
-  font-size: 2.1rem;
-  line-height: 1.15;
-  margin-bottom: 0.8rem;
-  color: var(--ink);
-  letter-spacing: -0.02em;
-}
-
-.card h2 {
-  font-family: 'Source Serif 4', serif;
-  font-size: 1.4rem;
-  line-height: 1.25;
-  margin-bottom: 0.6rem;
-  color: var(--ink);
-}
-
-.card p {
-  font-size: 0.95rem;
-  line-height: 1.65;
-  color: #3d3d3d;
+.card .kicker {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
   margin-bottom: 0.5rem;
 }
 
+.card h1 {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.6rem;
+  line-height: 1.25;
+  margin-bottom: 0.6rem;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.card h2 {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.card p {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #333;
+  margin-bottom: 0.4rem;
+}
+
 .card .stat {
-  font-family: 'Source Serif 4', serif;
-  font-size: 2.8rem;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 2.4rem;
   font-weight: 700;
   line-height: 1.1;
 }
 
 .card .stat-label {
-  font-size: 0.8rem;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: var(--muted);
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--rule);
 }
 
 .dot-tbr {
-  display: inline-block; width: 10px; height: 10px; border-radius: 50%;
-  background: var(--tbr-color); margin-right: 4px; vertical-align: middle;
+  display: inline-block; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--tbr-color); margin-right: 3px; vertical-align: middle;
 }
 .dot-cox {
-  display: inline-block; width: 10px; height: 10px; border-radius: 50%;
-  background: var(--cox-color); margin-right: 4px; vertical-align: middle;
+  display: inline-block; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--cox-color); margin-right: 3px; vertical-align: middle;
 }
 .dot-recent {
-  display: inline-block; width: 10px; height: 10px; border-radius: 50%;
-  background: var(--recent-color); margin-right: 4px; vertical-align: middle;
+  display: inline-block; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--recent-color); margin-right: 3px; vertical-align: middle;
 }
 
 .spacer { min-height: 50vh; }
 
 #legend {
   position: fixed;
-  bottom: 24px; right: 24px;
+  bottom: 20px; right: 20px;
   z-index: 20;
-  background: rgba(244, 241, 235, 0.92);
-  backdrop-filter: blur(6px);
-  padding: 14px 18px;
-  font-size: 0.78rem;
-  line-height: 1.8;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
-  border-radius: 2px;
-  transition: opacity 0.5s;
+  background: var(--paper);
+  padding: 10px 14px;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 0.7rem;
+  line-height: 1.9;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.12);
+  border-top: 2px solid var(--accent);
 }
-#legend .row { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
-#legend .swatch { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-.legend-item { transition: opacity 0.4s, max-height 0.4s; overflow: hidden; max-height: 30px; opacity: 1; }
+#legend .row { display: flex; align-items: center; gap: 7px; white-space: nowrap; }
+#legend .swatch { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.legend-item { transition: opacity 0.4s, max-height 0.4s; overflow: hidden; max-height: 28px; opacity: 1; }
 .legend-item.hidden { max-height: 0; opacity: 0; }
 
 #scroll-hint {
   position: fixed;
-  bottom: 28px; left: 50%; transform: translateX(-50%);
+  bottom: 24px; left: 50%; transform: translateX(-50%);
   z-index: 20;
+  font-family: 'Noto Sans', sans-serif;
   color: var(--muted);
-  font-size: 0.75rem;
+  font-size: 0.65rem;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   animation: pulse 2s ease-in-out infinite;
@@ -157,20 +174,30 @@ body {
 }
 #scroll-hint::after {
   content: ''; display: block;
-  width: 1px; height: 28px;
+  width: 1px; height: 24px;
   background: var(--muted);
-  margin: 6px auto 0;
+  margin: 5px auto 0;
   animation: grow 2s ease-in-out infinite;
 }
-@keyframes pulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
-@keyframes grow { 0%,100% { height: 20px; } 50% { height: 32px; } }
+@keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+@keyframes grow { 0%,100% { height: 18px; } 50% { height: 28px; } }
+
+.source {
+  font-family: 'Noto Sans', sans-serif;
+  color: #999;
+  font-size: 0.7rem;
+  margin-top: 0.8rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--rule);
+  line-height: 1.5;
+}
 
 @media (max-width: 640px) {
-  .card { max-width: 90vw; padding: 1.6rem 1.4rem; }
-  .card h1 { font-size: 1.5rem; }
-  .card h2 { font-size: 1.15rem; }
-  .card .stat { font-size: 2rem; }
-  #legend { bottom: 12px; right: 12px; padding: 10px 14px; }
+  .card { max-width: 88vw; padding: 1.4rem 1.2rem; }
+  .card h1 { font-size: 1.3rem; }
+  .card h2 { font-size: 1.1rem; }
+  .card .stat { font-size: 1.8rem; }
+  #legend { bottom: 10px; right: 10px; padding: 8px 12px; }
 }
 </style>
 </head>
@@ -204,14 +231,14 @@ body {
     <div class="card">
       <div class="stat" style="color: var(--accent);">1,947</div>
       <div class="stat-label">orphaned since January 2025</div>
-      <p>In roughly last year, nearly 2,000 wells were added to the orphan list. Wells are being added to the orphaned well list faster than the state can plug them.</p>
-      <p>The <span class="dot-recent"></span>red dots show wells orphaned since January 2025. The state has more orphaned wells now than it ever has before, according ot the Department of Conservation and Energy.</p>
+      <p>In roughly the last year, nearly 2,000 wells were added to the orphan list. Wells are being orphaned faster than the state can plug them.</p>
+      <p>The <span class="dot-recent"></span>red dots show wells orphaned since January 2025. The state has more orphaned wells now than it ever has before, according to the Department of Conservation and Energy.</p>
     </div>
   </div>
 
   <!-- STEP 2: TBR zoom -->
   <div class="step" data-step="2">
-    <div class="card" style="border-left-color: var(--tbr-color);">
+    <div class="card" style="border-top-color: var(--tbr-color);">
       <h2>TBR Operating Company</h2>
       <div class="stat" style="color: var(--tbr-color);">503</div>
       <div class="stat-label">orphan wells</div>
@@ -221,7 +248,7 @@ body {
 
   <!-- STEP 3: Cox zoom -->
   <div class="step" data-step="3">
-    <div class="card" style="border-left-color: var(--cox-color);">
+    <div class="card" style="border-top-color: var(--cox-color);">
       <h2>Cox Operating, L.L.C.</h2>
       <div class="stat" style="color: var(--cox-color);">350</div>
       <div class="stat-label">orphan wells</div>
@@ -233,7 +260,7 @@ body {
   <div class="step" data-step="4">
     <div class="card">
       <p>Together, <span class="dot-tbr"></span><strong>TBR Operating</strong> and <span class="dot-cox"></span><strong>Cox Operating</strong> account for about <strong>one in every eight</strong> orphan wells in Louisiana. Plugging a single well can cost hundreds of thousands of dollars. And taxpayers are left with the bill.</p>
-      <p style="color:var(--muted); font-size:0.82rem; margin-top:1rem;">Source: Louisiana Dept. of Natural Resources, Office of Conservation. Data as of March 30, 2026.</p>
+      <p class="source">Source: Louisiana Dept. of Natural Resources, Office of Conservation. Data as of March 30, 2026.</p>
     </div>
   </div>
 
