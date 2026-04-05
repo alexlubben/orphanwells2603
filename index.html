@@ -315,6 +315,8 @@ const terronneM = makeMarkers(W.terronne, '#4a6fa5', 3.5);
 const anecM   = makeMarkers(W.anec,   '#4a6fa5', 3.5);
 const coxM    = makeMarkers(W.cox,    '#4a6fa5', 3.5);
 
+const coxBounds = L.latLngBounds(W.cox.map(c => [c[0], c[1]]));
+
 L.layerGroup(otherM).addTo(map);
 L.layerGroup(recentM).addTo(map);
 L.layerGroup(tbrM).addTo(map);
@@ -391,7 +393,7 @@ const stepsConfig = [
     }
   },
   { // 4: Cox zoom
-    center: [29.55, -90.2], zoom: 9,
+    bounds: coxBounds,
     apply() {
       styleMarkers(otherM,  '#4a6fa5', 3, 0.05);
       styleMarkers(recentM, '#c23a22', 3, 0.08);
@@ -434,7 +436,11 @@ function transitionTo(idx) {
   if (idx === currentStep) return;
   currentStep = idx;
   const s = stepsConfig[idx];
-  map.flyTo(s.center, s.zoom, { duration: 1.6, easeLinearity: 0.35 });
+  if (s.bounds) {
+    map.flyToBounds(s.bounds, { duration: 1.6, easeLinearity: 0.35, padding: [24, 24] });
+  } else {
+    map.flyTo(s.center, s.zoom, { duration: 1.6, easeLinearity: 0.35 });
+  }
   s.apply();
 }
 
